@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-use Eaglewatch\DomainSearch\Facebook;
+use Eaglewatch\DomainSearch\WayBack;
 
 
-$facebook = new Facebook();
-$search = $facebook->search("peppa.io");
+$wayback = new WayBack();
+$search = $wayback->search("initsng.com");
 
 print_r($search);
