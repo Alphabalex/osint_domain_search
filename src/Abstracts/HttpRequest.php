@@ -12,7 +12,7 @@ abstract class HttpRequest
     protected string $baseUrl, $apiKey;
     protected $client;
     protected $response;
-    protected array $additionalHeader;
+    protected array $additionalHeader = [];
 
     public function __construct()
     {

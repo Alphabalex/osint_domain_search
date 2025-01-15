@@ -1,12 +1,9 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-use Eaglewatch\DomainSearch\UrlScan;
-use Eaglewatch\DomainSearch\CrtSearch;
-use Eaglewatch\DomainSearch\Dnsdumpster;
-use Eaglewatch\DomainSearch\WebCheckAnalyzer;
+use Eaglewatch\DomainSearch\Facebook;
 
 
-$urlscan = new UrlScan();
-$search = $urlscan->search("peppa.io");
+$facebook = new Facebook();
+$search = $facebook->search("peppa.io");
 
 print_r($search);
