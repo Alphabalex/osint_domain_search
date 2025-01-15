@@ -9,7 +9,7 @@ class UrlScan
 
     public function search(string $domain): array
     {
-        $url = config('urlscan.url') . "?q=" . urlencode($domain);
+        $url = config('urlscan.url') . "?q=domain:" . urlencode($domain);
 
         // Fetch the JSON data from the API endpoint
         $jsonData = @file_get_contents($url);
