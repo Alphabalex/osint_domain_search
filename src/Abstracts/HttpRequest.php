@@ -1,4 +1,5 @@
 <?php
+
 namespace Eaglewatch\DomainSearch\Abstracts;
 
 use Exception;
@@ -63,6 +64,23 @@ abstract class HttpRequest
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception("Failed to decode JSON: " . json_last_error_msg());
         }
+        return $data;
+    }
+
+    protected function getFileContent($url)
+    {
+        // Fetch the JSON data from the API endpoint
+        $jsonData = @file_get_contents($url);
+        if ($jsonData === FALSE) {
+            throw new Exception("Unable to fetch data from $url");
+        }
+
+        // Decode the JSON response
+        $data = json_decode($jsonData, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception("Failed to decode JSON: " . json_last_error_msg());
+        }
+
         return $data;
     }
 }
