@@ -1,7 +1,11 @@
 {
     "name": "eaglewatch/domain-search",
     "description": "This package is a FREE domain research tool that can discover hosts related to a domain. Finding visible hosts from the attackers perspective is an important part of the security assessment process",
-    "keywords": ["osint", "eaglewatch", "domain"],
+    "keywords": [
+        "osint",
+        "eaglewatch",
+        "domain"
+    ],
     "autoload": {
         "files": [
             "helpers/helper.php"
@@ -10,6 +14,7 @@
             "Eaglewatch\\DomainSearch\\": "src/"
         }
     },
+    "license": "MIT",
     "authors": [
         {
             "name": "Balogun Abdulquddus",
