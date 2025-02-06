@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "files": [
-            "helpers/helper.php"
+            "helpers/helpers.php"
         ],
         "psr-4": {
             "Eaglewatch\\DomainSearch\\": "src/"

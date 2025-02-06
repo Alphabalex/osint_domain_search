@@ -1,12 +1,13 @@
 <?php
+
 if (!function_exists('config')) {
     function config($key = null, $default = null)
     {
         static $loadedConfigs = [];
 
-        // If no key is provided, return null
-        if (is_null($key)) {
-            return null;
+        // Ensure the key is a string, or return null if it's invalid
+        if (!is_string($key) || empty($key)) {
+            return $default;
         }
 
         // Split the key by dot notation
