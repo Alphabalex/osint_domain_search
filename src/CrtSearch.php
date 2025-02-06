@@ -11,7 +11,7 @@ class CrtSearch extends HttpRequest
 
     public function search(string $domain): array
     {
-        $url = config('crt.url') . "?q=" . urlencode($domain) . "&output=json";
+        $url = getConfig('crt.url') . "?q=" . urlencode($domain) . "&output=json";
 
         $data = $this->getFileContent($url);
 

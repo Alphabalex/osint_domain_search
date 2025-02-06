@@ -17,7 +17,7 @@ class Facebook extends HttpRequest
 
         $this->appId = $appId;
         $this->appSecret = $appSecret;
-        $this->options = array_merge(config('facebook'), $options);
+        $this->options = array_merge(getConfig('facebook'), $options);
     }
 
     private function getAccessToken()

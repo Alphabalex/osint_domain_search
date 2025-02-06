@@ -12,7 +12,7 @@ class VirusTotal extends HttpRequest
     public function __construct(string $apiKey, array $options = [])
     {
         $this->api_key = $apiKey;
-        $this->options = array_merge(config('virustotal'), $options);
+        $this->options = array_merge(getConfig('virustotal'), $options);
     }
 
     public function search(string $domain): array

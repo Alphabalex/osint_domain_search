@@ -11,7 +11,7 @@ class HackerTarget extends HttpRequest
 
     public function search(string $domain): array
     {
-        $url = config('hackertarget.url') . "?q=" . urlencode($domain) ."&output=json";
+        $url = getConfig('hackertarget.url') . "?q=" . urlencode($domain) ."&output=json";
         return $this->getFileContent($url);
     }
 }

@@ -9,7 +9,7 @@ class WayBack extends HttpRequest
     private $options = array();
     public function __construct(array $options = [])
     {
-        $this->options = array_merge(config('wayback'), $options);
+        $this->options = array_merge(getConfig('wayback'), $options);
     }
 
     public function search(string $domain): array

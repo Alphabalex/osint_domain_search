@@ -1,7 +1,7 @@
 <?php
 
-if (!function_exists('config')) {
-    function config($key = null, $default = null)
+if (!function_exists('getConfig')) {
+    function getConfig($key = null, $default = null)
     {
         static $loadedConfigs = [];
 

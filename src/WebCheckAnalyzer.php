@@ -9,7 +9,7 @@ class WebCheckAnalyzer extends HttpRequest
     private $options = array();
     public function __construct(array $options = [])
     {
-        $this->options = array_merge(config('webcheck'), $options);
+        $this->options = array_merge(getConfig('webcheck'), $options);
     }
 
     /**
