@@ -2,46 +2,25 @@
 
 namespace Eaglewatch\DomainSearch;
 
-class WayBack
-{
+use Eaglewatch\DomainSearch\Abstracts\HttpRequest;
 
-    public function __construct() {}
+class WayBack extends HttpRequest
+{
+    private $options = array();
+    public function __construct(array $options = [])
+    {
+        $this->options = array_merge(config('wayback'), $options);
+    }
 
     public function search(string $domain): array
     {
-        $url = config('wayback.url') . "?url=*." . urlencode($domain) . "/*&output=json&collapse=urlkey";
-
-        // Fetch the JSON data from the API endpoint
-        $jsonData = @file_get_contents($url);
-        if ($jsonData === FALSE) {
-            throw new \Exception("Unable to fetch data from $url");
-        }
-
-        // Decode the JSON response
-        $data = json_decode($jsonData, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \Exception("Failed to decode JSON: " . json_last_error_msg());
-        }
-
-        return $data;
+        $url = $this->options['api_url'] . "?url=*." . urlencode($domain) . "/*&output=json&collapse=urlkey";
+        return $this->getFileContent($url);
     }
 
     public function available(string $domain): array
     {
-        $url = config('wayback.availability_url') . "?url=" . urlencode($domain);
-
-        // Fetch the JSON data from the API endpoint
-        $jsonData = @file_get_contents($url);
-        if ($jsonData === FALSE) {
-            throw new \Exception("Unable to fetch data from $url");
-        }
-
-        // Decode the JSON response
-        $data = json_decode($jsonData, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \Exception("Failed to decode JSON: " . json_last_error_msg());
-        }
-
-        return $data;
+        $url = $this->options['availability_url'] . "?url=" . urlencode($domain);
+        return $this->getFileContent($url);
     }
 }

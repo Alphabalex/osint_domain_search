@@ -7,17 +7,16 @@ use Eaglewatch\DomainSearch\Abstracts\HttpRequest;
 
 class Dnsdumpster extends HttpRequest
 {
-
-    public function __construct()
+    private $options = array();
+    public function __construct(string $api_key, array $options = [])
     {
-        $this->setApiUrl(config('dnsdumpster.api_url'));
-        $this->setApiKey(config('dnsdumpster.api_key'));
-        $this->additionalHeader = ['X-API-Key' => $this->apiKey];
+        $this->options = array_merge(config('dnsdumpster'), $options);
+        $this->setApiUrl($this->options['api_url']);
+        $this->setHeaders(['X-API-Key' => $api_key]);
     }
 
     public function search(string $domain): array
     {
-        $this->setRequestOptions();
-        return $this->setHttpResponse("/domain/{$domain}", 'GET', [])->getResponse();
+        return $this->sendHttpRequest("/domain/{$domain}", 'GET', []);
     }
 }

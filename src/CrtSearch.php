@@ -2,7 +2,9 @@
 
 namespace Eaglewatch\DomainSearch;
 
-class CrtSearch
+use Eaglewatch\DomainSearch\Abstracts\HttpRequest;
+
+class CrtSearch extends HttpRequest
 {
 
     public function __construct() {}
@@ -11,17 +13,7 @@ class CrtSearch
     {
         $url = config('crt.url') . "?q=" . urlencode($domain) . "&output=json";
 
-        // Fetch the JSON data from the API endpoint
-        $jsonData = @file_get_contents($url);
-        if ($jsonData === FALSE) {
-            throw new \Exception("Unable to fetch data from $url");
-        }
-
-        // Decode the JSON response
-        $data = json_decode($jsonData, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \Exception("Failed to decode JSON: " . json_last_error_msg());
-        }
+        $data = $this->getFileContent($url);
 
         // Transform data if necessary
         $results = array_map(function ($item) {

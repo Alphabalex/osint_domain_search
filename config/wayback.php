@@ -1,5 +1,5 @@
 <?php
 return [
-    "url" => "http://web.archive.org/cdx/search/cdx",
+    "api_url" => "http://web.archive.org/cdx/search/cdx",
     "availability_url" => "http://archive.org/wayback/available",
 ];
