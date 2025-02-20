@@ -346,4 +346,125 @@ class WhoIs extends HttpRequest
 
         return $this->sendHttpRequest("?{$queryString}", 'GET', []);
     }
+
+    public function categorize(string $url, array $params = []): array
+    {
+        if (empty($url)) {
+            throw new \InvalidArgumentException('URL is required');
+        }
+
+        $this->setApiUrl($this->options['website_categorization_url']);
+
+        $defaultParams = [
+            'apiKey' => $this->apiKey,
+            'url' => $url,
+            'outputFormat' => 'JSON',
+            'minConfidence' => 0.55
+        ];
+
+        $allowedParams = [
+            'outputFormat',
+            'minConfidence'
+        ];
+
+        $filteredParams = array_filter(
+            $params,
+            fn($key) => in_array($key, $allowedParams),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        // Validate minConfidence if present
+        if (isset($filteredParams['minConfidence'])) {
+            $confidence = (float)$filteredParams['minConfidence'];
+            if ($confidence < 0.00 || $confidence > 1.00) {
+                throw new \InvalidArgumentException('minConfidence must be between 0.00 and 1.00');
+            }
+        }
+
+        $queryParams = array_merge($defaultParams, $filteredParams);
+        $queryString = http_build_query($queryParams);
+
+        return $this->sendHttpRequest("?{$queryString}", 'GET', []);
+    }
+
+    public function reputation(string $domainOrIp, array $params = []): array
+    {
+        if (empty($domainOrIp)) {
+            throw new \InvalidArgumentException('Domain name or IP address is required');
+        }
+
+        $this->setApiUrl($this->options['domain_reputation_url']);
+
+        $defaultParams = [
+            'apiKey' => $this->apiKey,
+            'domainName' => $domainOrIp,
+            'outputFormat' => 'JSON',
+            'mode' => 'fast'
+        ];
+
+        $allowedParams = [
+            'outputFormat',
+            'mode'
+        ];
+
+        $filteredParams = array_filter(
+            $params,
+            fn($key) => in_array($key, $allowedParams),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        // Validate mode parameter
+        if (isset($filteredParams['mode']) && !in_array($filteredParams['mode'], ['fast', 'full'])) {
+            throw new \InvalidArgumentException('Mode must be either "fast" or "full"');
+        }
+
+        $queryParams = array_merge($defaultParams, $filteredParams);
+        $queryString = http_build_query($queryParams);
+
+        return $this->sendHttpRequest("?{$queryString}", 'GET', []);
+    }
+
+    public function geolocation($ip, array $params = []): array
+    {
+        $this->setApiUrl($this->options['ip_geolocation_url']);
+
+        $defaultParams = [
+            'apiKey' => $this->apiKey,
+            'ipAddress' => $ip,
+            'outputFormat' => 'JSON',
+            'reverseIp' => 1
+        ];
+
+        $allowedParams = [
+            'ipAddress',
+            'domain',
+            'email',
+            'reverseIp',
+            'outputFormat'
+        ];
+
+        $filteredParams = array_filter(
+            $params,
+            fn($key) => in_array($key, $allowedParams),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        // Validate reverseIp parameter if present
+        if (isset($filteredParams['reverseIp']) && !in_array($filteredParams['reverseIp'], [0, 1])) {
+            throw new \InvalidArgumentException('reverseIp must be either 0 or 1');
+        }
+
+        // Validate that at least one search parameter is provided
+        if (!empty($filteredParams)) {
+            $searchParams = array_intersect(['ipAddress', 'domain', 'email'], array_keys($filteredParams));
+            if (count($searchParams) > 1) {
+                throw new \InvalidArgumentException('Only one search parameter (ipAddress, domain, or email) can be specified');
+            }
+        }
+
+        $queryParams = array_merge($defaultParams, $filteredParams);
+        $queryString = http_build_query($queryParams);
+
+        return $this->sendHttpRequest("?{$queryString}", 'GET', []);
+    }
 }

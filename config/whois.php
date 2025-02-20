@@ -6,4 +6,7 @@ return [
    "whois_screenshot_url" => "https://website-screenshot.whoisxmlapi.com/api/v1",
    "whois_subdomains_url" => "https://subdomains.whoisxmlapi.com/api/v1",
    "threat_intelligence_url" => "https://threat-intelligence.whoisxmlapi.com/api/v1",
+   "website_categorization_url" => "https://website-categorization.whoisxmlapi.com/api/v3",
+   'domain_reputation_url' => 'https://domain-reputation.whoisxmlapi.com/api/v2',
+   'ip_geolocation_url' => 'https://ip-geolocation.whoisxmlapi.com/api/v1',
 ];
