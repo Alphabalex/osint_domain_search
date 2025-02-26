@@ -19,8 +19,6 @@ class WhoIs extends HttpRequest
     {
         $this->setApiUrl($this->options['whois_url']);
 
-        $response = [];
-
         $defaultParams = [
             'apiKey' => $this->apiKey,
             'domainName' => $domain,
@@ -56,9 +54,7 @@ class WhoIs extends HttpRequest
         $queryParams = array_merge($defaultParams, $filteredParams);
         $queryString = http_build_query($queryParams);
 
-        $response['domain'] = $this->sendHttpRequest("?{$queryString}", 'GET', []);
-        $response['subDomains'] = $this->subdomains($domain, $params);
-        return $response;
+        return $this->sendHttpRequest("?{$queryString}", 'GET', []);
     }
 
     public function history(string $domain, array $params = []): array
